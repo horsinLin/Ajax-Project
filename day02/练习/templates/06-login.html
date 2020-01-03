@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p>
+        用户名: <input type="text" id="uname">
+    </p>
+    <p id="show" style="color: red"></p>
+    <p>
+        密  码: <input type="password" id="upasswd">
+    </p>
+    <p>
+        <input type="submit" value="登录">
+    </p>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#uname").blur(function () {
+                // 获取uname的值
+                username = $("#uname").val();
+                // 1.创建xhr
+                xhr = createXhr();
+                // 2.创建请求
+                xhr.open('post', '/server', true);
+                // 3.创建回调函数
+                xhr.onreadystatechange = function () {
+                    if(xhr.readyState == 4 && xhr.status == 200){
+                        $("#show").html(xhr.responseText)
+                    }
+                }
+                // 4.发送请求
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+                xhr.send("username="+username)
+            });
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../static/js/jquery.min.js"></script>
+</head>
+<body>
+    <script>
+        var arr = [
+            {
+                "name" : "laowang",
+                "age" : 40,
+                "gender" : "男"
+            },
+            {
+                "name" : "wanglao",
+                "age" : 28,
+                "gender" : "男"
+            }
+        ];
+        /*for (var i = 0; i < arr.length; i++){
+            var obj = arr[i];
+            console.log(obj.name);
+            console.log(obj.age);
+            console.log(obj.gender);
+        }*/
+        /*$(arr).each(function (i, obj) {
+            console.log("下标为"+i+"的元素")
+            console.log("姓名:"+obj.name)
+            console.log("年龄:"+obj.age)
+            console.log("性别:"+obj.gender)
+        });*/
+        $.each(arr,function (i,obj) {
+            console.log("下标为"+i+"的元素")
+            console.log("姓名:"+obj.name)
+            console.log("年龄:"+obj.age)
+            console.log("性别:"+obj.gender)
+        });
+    </script>
+</body>
+</html>
