@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/common.js"></script>
+        <script src="/static/js/jquery.min.js"></script>
+        <script>
+            $(function () {
+               $("#show").click(function () {
+                   // 1.创建xhr
+                   var xhr = createXhr();
+                   // 2.创建请求
+                   xhr.open('get', '/server', true)
+                   // 3.设置回调函数
+                   xhr.onreadystatechange = function () {
+                       if(xhr.readyState == 4 && xhr.status == 200){
+                           var arr = JSON.parse(xhr.responseText);
+                           var html = "";
+                           $.each(arr,function (i, obj) {
+                               html +="<tr>";
+                                   html+="<td>"+obj.id+"</td>>";
+                                   html+="<td>"+obj.uname+"</td>>";
+                                   html+="<td>"+obj.upwd+"</td>>";
+                                   html+="<td>"+obj.realname+"</td>>";
+                               html +="</tr>";
+                           })
+                           $("#show-body").html(html);
+                       }
+                   }
+                   // 4.发送请求
+                   xhr.send(null)
+               });
+            });
+        </script>
+</head>
+<body>
+    <button id="show">显示所有</button>
+    <table border="1" cellspacing="0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>用户名</th>
+                <th>密码</th>
+                <th>真实姓名</th>
+            </tr>
+        </thead>
+        <tbody id="show-body">
+
+        </tbody>
+    </table>
+</body>
+</html>

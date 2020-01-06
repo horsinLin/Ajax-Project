@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/jquery.min,js"></script>
+    <script>
+        function loadPro() {
+            var xhr = createXhr();
+            xhr.open('get','/loadPro',false);
+            xhr.onreadystatechange = function () {
+                if(xhr.readyState == 4 && xhr.status == 200){
+                    var arr = JSON.parse(xhr.responseText);
+                    var html = "";
+                    $.each(arr,function (i,obj) {
+                        html += "<option value='"+obj.id+"'>";
+                        html += obj.proname;
+                        html += "</option>";
+                    });
+                    $("#selpro").html(html)
+                }
+            }
+            xhr.send(null);
+        }
+        function loadCity(pid) {
+            var xhr = createXhr();
+            var url = '/loadCity?pid='+pid;
+            xhr.open('get', url, true);
+            xhr.onreadystatechange = function () {
+                if(xhr.readyState == 4 && xhr.status == 200){
+                    var arr = JSON.parse(xhr.responseText);
+                    var html = "";
+                    $.each(arr,function (i,obj) {
+                        html += "<option value='"+obj.id+"'>";
+                        html += obj.cityname;
+                        html += "</option>";
+                    });
+                }
+            };
+            xhr.send(null)
+        }
+        $(function () {
+            /**加载所有省份信息*/
+            loadPro();
+            /**为selPro绑定change事件*/
+            $("#selPro").change(function () {
+               loadCity(this.value)
+            });
+            /**调用loadCity()，先将默认的城市加载进来*/
+            loadCity($("#selpro").val());
+        });
+    </script>
+</head>
+<body>
+    <select id="selPro"></select>
+    <select id="selCity"></select>
+</body>
+</html>
