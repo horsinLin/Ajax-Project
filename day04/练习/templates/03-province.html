@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/jquery.min.js"></script>
+    <script>
+        function loadPro() {
+            $.ajax({
+                url: '/loadPro',
+                type: 'get',
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    var html = "";
+                    $.each(data,function (i,obj) {
+                        html += "<option value="+obj.id+">";
+                        html += obj.proname;
+                        html += "</option>";
+                    });
+                    $("#selPro").html(html)
+                }
+            });
+        }
+
+        function loadCity(pid){
+            $.get(
+                '/loadCity',
+                {'pid': pid},
+                function (data) {
+                    var html = "";
+                    $.each(data,function (i,obj) {
+                        html += "<option value="+obj.id+">";
+                        html += obj.cityname;
+                        html += "</option>";
+                    });
+                    $("#selCity").html(html)
+                }, 'json');
+        }
+
+        $(function () {
+            loadPro();
+            $("#selPro").change(function () {
+                loadCity(this.value);
+            });
+            loadCity($("#selPro").val());
+        });
+    </script>
+</head>
+<body>
+    <select id="selPro"></select>
+    <select id="selCity"></select>
+</body>
+</html>

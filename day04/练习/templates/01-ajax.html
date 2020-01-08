@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+    <p>
+        用户名: <input type="text" id="uname">
+    </p>
+    <button id="btnAjax">ajax请求</button>
+    <p id="show"></p>
+    <script>
+        $(function () {
+           $("#btnAjax").click(function () {
+               // 使用 get 请求方式,发送参数名位 uname 的数据到服务器
+               $.ajax({
+                   // 请求地址
+                   url: '/01-server',
+                   // 请求方式
+                   type: 'get',
+                   // 请求参数
+                   data: 'username='+$('#uname').val(),
+                   // 响应回来的数据格式
+                   dataType: 'json',
+                   // 请求和响应成功后的回调函数
+                   success: function (data) {
+                       var html = "";
+                       if(data.username){
+                           // 如果data中由ID属性的话,则说明查询成功
+                           html += "<h3>username:"+data.username+"</h3>";
+                           html += "<h3>passwd:"+data.passwd+"</h3>";
+                       }else {
+                           // data中没有id属性,说明查询失败
+                           html += "<h3>"+data.msg+"</h3>";
+                       }
+                       $("#show").html(html);
+                   }
+               })
+           }); 
+        });
+    </script>
+</body>
+</html>
